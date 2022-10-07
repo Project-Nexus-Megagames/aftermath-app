@@ -11,6 +11,11 @@
 # production
 /build
 
+# dotenv environment variables file
+.env
+*.env
+.env.*
+
 # misc
 .DS_Store
 .env.local

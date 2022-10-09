@@ -71,63 +71,63 @@ export const getMyCharacter = createSelector(
   (state: RootState) => state.characters.list,
   (state: RootState) => state.auth.character,
   (state: RootState) => state.auth.user,
-  (characters: character[], character: character, user) => {
+  (characters, character, user) => {
     if (character) return character;
-    return characters.find((char) => char.username === user.username);
+    return characters.find((char) => char.username === user?.username);
   }
 );
 
 export const getPlayerCharacters = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => char.tags.some((el) => el === "PC"))
+  (state: RootState) => state.characters.list,
+  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "PC"))
 );
 
 export const getNonPlayerCharacters = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => char.tags.some((el) => el === "NPC"))
+  (state: RootState) => state.characters.list,
+  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "NPC"))
 );
 
 export const getGods = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => char.tags.some((el) => el === "God"))
+  (state:RootState) => state.characters.list,
+  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "God"))
 );
 
 export const getControl = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => char.tags.some((el) => el === "Control"))
+  (state:RootState) => state.characters.list,
+  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "Control"))
 );
 
 export const getPublicCharacters = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => char.tags.some((el) => el.toLowerCase() === "public"))
+  (state:RootState) => state.characters.list,
+  (characters) => characters.filter((char) => char?.tags?.some((el) => el.toLowerCase() === "public"))
 );
 
 export const getPrivateCharacters = createSelector(
-  (state) => state.characters.list,
-  (characters) => characters.filter((char) => !char.tags.some((el) => el.toLowerCase() === "public"))
+  (state:RootState) => state.characters.list,
+  (characters) => characters.filter((char) => !char?.tags?.some((el) => el.toLowerCase() === "public"))
 );
 
-export const getCharacterById = (charId) =>
+export const getCharacterById = (charId:string) =>
   createSelector(
-    (state) => state.characters,
+    (state:RootState) => state.characters,
     (characters) => characters.list.find((char) => char._id === charId)
   );
 
 export const getMyUnlockedCharacters = createSelector(
-  (state) => state.characters.list,
-  (state) => state.auth.character,
+  (state:RootState) => state.characters.list,
+  (state:RootState) => state.auth.character,
   (characters, character) => {
     if (!character) return [];
-    return characters.filter((char) => character.knownContacts.some((el) => el._id === char._id));
+    return characters.filter((char) => character.knownContacts?.some((el) => el._id === char._id));
   }
 );
 
-export const getUnlockedCharacters = (character) =>
+export const getUnlockedCharacters = (character:character) =>
   createSelector(
-    (state) => state.characters,
+    (state:RootState) => state.characters,
     (characters) => {
       if (!character) return [];
-      return characters.list.filter((char) => character.knownContacts.some((el) => el._id === char._id));
+      return characters.list.filter((char) => character.knownContacts?.some((el) => el._id === char._id));
     }
   );
 

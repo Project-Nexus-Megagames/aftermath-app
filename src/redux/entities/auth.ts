@@ -2,6 +2,18 @@ import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 // import playTrack from "../../scripts/audio";
 import jwtDecode from "jwt-decode"; // JSON web-token decoder
+import { character, auth, user } from "../../types";
+
+interface AuthState {
+  user: user | undefined;
+  character: character | undefined;
+  login: boolean;
+	loading: boolean;
+	lastLogin: number | null;
+  control: boolean;
+	users: user[];
+  error: string | null;
+}
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -15,7 +27,7 @@ const slice = createSlice({
     control: false,
     users: [],
     error: null,
-  },
+  } as AuthState,
   // Reducers - Events
   reducers: {
     // this will become hadleLogin from app.js
@@ -26,7 +38,7 @@ const slice = createSlice({
     authReceived: (auth, action) => {
       console.log(`${action.type} Dispatched...`);
 
-      let jwt = action.payload.token;
+      const jwt = action.payload.token;
       localStorage.setItem("candi-token", jwt);
       const user = jwtDecode(jwt);
       console.log(localStorage);

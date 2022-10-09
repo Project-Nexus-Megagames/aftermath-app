@@ -1,6 +1,16 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { gameServer } from "../../config";
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { character } from "../../types";
+import { RootState } from "../store";
+
+interface CharacterState {
+  list: character[];
+  loading: boolean;
+  loaded: boolean;
+  lastFetch: number | null;
+  failedAttempts: number;
+}
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -11,7 +21,7 @@ const slice = createSlice({
     loaded: false,
     lastFetch: null,
     failedAttempts: 0,
-  },
+  } as CharacterState,
   // Reducers - Events
   reducers: {
     charactersRequested: (characters, action) => {
@@ -58,10 +68,10 @@ const url = `${gameServer}api/characters`;
 
 // Selector
 export const getMyCharacter = createSelector(
-  (state) => state.characters.list,
-  (state) => state.auth.character,
-  (state) => state.auth.user,
-  (characters, character, user) => {
+  (state: RootState) => state.characters.list,
+  (state: RootState) => state.auth.character,
+  (state: RootState) => state.auth.user,
+  (characters: character[], character: character, user) => {
     if (character) return character;
     return characters.find((char) => char.username === user.username);
   }

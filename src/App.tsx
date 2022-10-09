@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
 import DatabaseProvider from "./components/Common/DataBaseProvider";
-import { ChakraProvider } from '@chakra-ui/react';
-import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
-import theme from './Theme';
-import HomePage from './components/Home/HomePage';
+import { ChakraProvider } from "@chakra-ui/react";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
+import theme from "./Theme";
+import HomePage from "./components/Home/HomePage";
 
 function App() {
   return (
-    <main className="container">
+    <main className='container'>
       <DatabaseProvider>
         <ChakraProvider theme={theme}>
           <BrowserRouter>
@@ -19,8 +19,9 @@ function App() {
               <Route path="/login" element={<Login />} />
 							<Route path='/currentcocktailclub' element={<CurrentCocktailClub/>}/>
               <Route path="*" element={<Navigate to="/recipes" replace />} />*/}
-							<Route path="/home" element={<HomePage />} />
-							<Route path="*" element={<Navigate to="/home" replace />} />*/
+              <Route path='/home' element={<HomePage />} />
+              <Route path='*' element={<Navigate to='/home' replace />} />
+              */
             </Routes>
           </BrowserRouter>
         </ChakraProvider>

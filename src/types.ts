@@ -3,18 +3,18 @@ export interface character {
   playerName: string;
   characterName: string;
   username?: string | undefined;
-  characterTitle?: string | undefined;
-  pronouns?: string | undefined;
-  bio?: string | undefined;
+  characterTitle?: string;
+  pronouns?: string;
+  bio?: string;
   email: string;
-  wiki?: string | undefined;
-  timeZone?: string | undefined;
-  tags?: string[] | undefined;
-  control?: string[] | undefined;
+  wiki?: string;
+  timeZone?: string;
+  tags?: string[];
+  control?: string[];
   color: string;
-  profilePicture?: string | undefined;
-  team?: string | undefined;
-	knownContacts: character[] | undefined
+  profilePicture?: string;
+  team?: string;
+	knownContacts: character[]
 }
 
 export interface team {}
@@ -32,5 +32,15 @@ export interface auth {
 	lastLogin: number | null,
 	control: boolean,
 	users: user[],
+	loadComplete: boolean
 	//error: null,
+}
+
+export interface apiCall {
+  url: string;
+  method: 'get' | 'post';
+  data: { [index: string]: unknown };
+  onStart?: string;
+  onSuccess?: string;
+  onError?: string;
 }

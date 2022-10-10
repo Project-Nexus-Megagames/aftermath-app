@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 // import playTrack from "../../scripts/audio";
 import jwtDecode from "jwt-decode"; // JSON web-token decoder
-import { character, auth, user } from "../../types";
+import { character, user } from "../../types";
 
 interface AuthState {
   user: user | undefined;
@@ -13,6 +13,7 @@ interface AuthState {
   control: boolean;
 	users: user[];
   error: string | null;
+	loadComplete: boolean
 }
 
 // Create entity slice of the store
@@ -27,6 +28,7 @@ const slice = createSlice({
     control: false,
     users: [],
     error: null,
+		loadComplete: false
   } as AuthState,
   // Reducers - Events
   reducers: {
@@ -40,7 +42,7 @@ const slice = createSlice({
 
       const jwt = action.payload.token;
       localStorage.setItem("candi-token", jwt);
-      const user = jwtDecode(jwt);
+      const user:user = jwtDecode(jwt);
       console.log(localStorage);
 
       //if (user.roles.some(el => el === "Control")) auth.control = true;
@@ -58,7 +60,9 @@ const slice = createSlice({
     },
     loginSocket: (auth, action) => {
       console.log(`${action.type} Dispatched`);
-      auth.socket = action.payload.me;
+      // @ts-ignore
+			// TODO
+			auth.socket = action.payload.me;
     },
     finishLoading: (auth, action) => {
       console.log(`${action.type} Dispatched`);
@@ -67,7 +71,7 @@ const slice = createSlice({
     setCharacter: (auth, action) => {
       console.log(`${action.type} Dispatched`);
       auth.character = action.payload;
-      if (action.payload.tags.some((el) => el.toLowerCase() === "control")) auth.control = true;
+      if (action.payload.tags.some((el:string) => el.toLowerCase() === "control")) auth.control = true;
       // initConnection(auth.user, auth.team, auth.version);
     },
     setControl: (auth, action) => {
@@ -106,6 +110,8 @@ export default slice.reducer; // Reducer Export
 const url = "https://nexus-central-server.herokuapp.com/auth";
 
 // aircraft Loader into state
+// @ts-ignore
+// TODO
 export const loginUser = (payload) => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({

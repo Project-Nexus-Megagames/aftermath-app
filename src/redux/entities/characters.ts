@@ -3,6 +3,7 @@ import { gameServer } from "../../config";
 import { apiCallBegan } from "../api"; // Import Redux API call
 import { character } from "../../types";
 import { RootState } from "../store";
+import { useAppDispatch } from './../../hooks/typedStoreHooks';
 
 interface CharacterState {
   list: character[];
@@ -22,6 +23,7 @@ const slice = createSlice({
     lastFetch: null,
     failedAttempts: 0,
   } as CharacterState,
+
   // Reducers - Events
   reducers: {
     charactersRequested: (characters, action) => {
@@ -79,32 +81,12 @@ export const getMyCharacter = createSelector(
 
 export const getPlayerCharacters = createSelector(
   (state: RootState) => state.characters.list,
-  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "PC"))
-);
-
-export const getNonPlayerCharacters = createSelector(
-  (state: RootState) => state.characters.list,
-  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "NPC"))
-);
-
-export const getGods = createSelector(
-  (state:RootState) => state.characters.list,
-  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "God"))
+  (characters) => characters.filter((char) => char.tags?.some((el) => el === "PC"))
 );
 
 export const getControl = createSelector(
   (state:RootState) => state.characters.list,
-  (characters) => characters.filter((char) => char?.tags?.some((el) => el === "Control"))
-);
-
-export const getPublicCharacters = createSelector(
-  (state:RootState) => state.characters.list,
-  (characters) => characters.filter((char) => char?.tags?.some((el) => el.toLowerCase() === "public"))
-);
-
-export const getPrivateCharacters = createSelector(
-  (state:RootState) => state.characters.list,
-  (characters) => characters.filter((char) => !char?.tags?.some((el) => el.toLowerCase() === "public"))
+  (characters) => characters.filter((char) => char.tags?.some((el) => el === "Control"))
 );
 
 export const getCharacterById = (charId:string) =>
@@ -113,25 +95,9 @@ export const getCharacterById = (charId:string) =>
     (characters) => characters.list.find((char) => char._id === charId)
   );
 
-export const getMyUnlockedCharacters = createSelector(
-  (state:RootState) => state.characters.list,
-  (state:RootState) => state.auth.character,
-  (characters, character) => {
-    if (!character) return [];
-    return characters.filter((char) => character.knownContacts?.some((el) => el._id === char._id));
-  }
-);
-
-export const getUnlockedCharacters = (character:character) =>
-  createSelector(
-    (state:RootState) => state.characters,
-    (characters) => {
-      if (!character) return [];
-      return characters.list.filter((char) => character.knownContacts?.some((el) => el._id === char._id));
-    }
-  );
-
 // characters Loader into state
+// @ts-ignore
+// TODO
 export const loadCharacters = (payload) => (dispatch) => {
   return dispatch(
     apiCallBegan({

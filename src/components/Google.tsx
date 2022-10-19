@@ -44,7 +44,12 @@ export const AftermathMap = () => {
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
 				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => newLocation(e.latLng!.toJSON())}>
-					<MarkerF position={location} icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'} />
+					<MarkerF
+						position={location}
+						icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
+						draggable={true}
+						onDragEnd={(e) => newLocation(e.latLng!.toJSON())}
+					/>
 				</GoogleMap>
 			</LoadScript>
 		</Box>

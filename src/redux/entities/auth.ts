@@ -5,30 +5,30 @@ import jwtDecode from "jwt-decode"; // JSON web-token decoder
 import { character, user } from "../../types";
 
 interface AuthState {
-  user: user | undefined;
-  character: character | undefined;
+  user: user | undefined | null;
+  character: character | undefined | null;
   login: boolean;
-	loading: boolean;
-	lastLogin: number | null;
+  loading: boolean;
+  lastLogin: number | null;
   control: boolean;
-	users: user[];
+  users: user[];
   error: string | null;
-	loadComplete: boolean
+  loadComplete: boolean;
 }
 
 // Create entity slice of the store
 const slice = createSlice({
   name: "auth",
   initialState: {
-    user: undefined,
-    character: undefined,
+    user: null,
+    character: null,
     login: false,
     loading: false,
     lastLogin: null,
     control: false,
     users: [],
     error: null,
-		loadComplete: false
+    loadComplete: false,
   } as AuthState,
   // Reducers - Events
   reducers: {
@@ -42,7 +42,7 @@ const slice = createSlice({
 
       const jwt = action.payload.token;
       localStorage.setItem("candi-token", jwt);
-      const user:user = jwtDecode(jwt);
+      const user: user = jwtDecode(jwt);
       console.log(localStorage);
 
       //if (user.roles.some(el => el === "Control")) auth.control = true;
@@ -61,8 +61,8 @@ const slice = createSlice({
     loginSocket: (auth, action) => {
       console.log(`${action.type} Dispatched`);
       // @ts-ignore
-			// TODO
-			auth.socket = action.payload.me;
+      // TODO
+      auth.socket = action.payload.me;
     },
     finishLoading: (auth, action) => {
       console.log(`${action.type} Dispatched`);
@@ -71,7 +71,7 @@ const slice = createSlice({
     setCharacter: (auth, action) => {
       console.log(`${action.type} Dispatched`);
       auth.character = action.payload;
-      if (action.payload.tags.some((el:string) => el.toLowerCase() === "control")) auth.control = true;
+      if (action.payload.tags.some((el: string) => el.toLowerCase() === "control")) auth.control = true;
       // initConnection(auth.user, auth.team, auth.version);
     },
     setControl: (auth, action) => {
@@ -84,7 +84,7 @@ const slice = createSlice({
     signOut: (auth, action) => {
       console.log(`${action.type} Dispatched`);
       localStorage.removeItem("candi-token");
-      auth.user = undefined;
+      auth.user = null;
       auth.login = false;
       auth.loading = false;
       auth.lastLogin = null;
@@ -112,7 +112,7 @@ const url = "https://nexus-central-server.herokuapp.com/auth";
 // aircraft Loader into state
 // @ts-ignore
 // TODO
-export const loginUser = (payload) => (dispatch, getState) => {
+export const loginUser = (payload) => (dispatch: T) => {
   return dispatch(
     apiCallBegan({
       url,

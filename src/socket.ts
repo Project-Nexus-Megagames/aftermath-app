@@ -1,4 +1,3 @@
-// @ts-ignore
 import { io } from 'socket.io-client';
 import { gameServer } from './config';
 // import store from "./redux/store";

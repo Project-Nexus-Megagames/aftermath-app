@@ -3,7 +3,6 @@ import { gameServer } from "../../config";
 import { apiCallBegan } from "../api"; // Import Redux API call
 import { character } from "../../types";
 import { RootState } from "../store";
-import { useAppDispatch } from './../../hooks/typedStoreHooks';
 
 interface CharacterState {
   list: character[];

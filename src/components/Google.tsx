@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { mapstyle } from '../config/mapStyles';
 import { Box, Button, Spinner, Text } from '@chakra-ui/react';
@@ -12,6 +12,12 @@ const mapContainerStyle = {
 };
 
 export const AftermathMap = () => {
+	const [location, setLocation] = useState({ lat: 40.712776, lng: -74.005974 });
+	// @ts-ignore
+	const newLocation = (location) => {
+		setLocation(location);
+	};
+
 	const mapOptions = {
 		styles: mapstyle,
 		disableDefaultUI: true,
@@ -37,8 +43,8 @@ export const AftermathMap = () => {
 	return (
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
-				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10}>
-					<MarkerF position={{ lat: 40.712776, lng: -74.005974 }} icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'} />
+				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => newLocation(e.latLng!.toJSON())}>
+					<MarkerF position={location} icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'} />
 				</GoogleMap>
 			</LoadScript>
 		</Box>

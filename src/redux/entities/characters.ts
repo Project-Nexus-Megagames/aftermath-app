@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
-import { gameServer } from "../../config";
+import { gameServer } from "../../config/config";
 import { apiCallBegan } from "../api"; // Import Redux API call
-import { character } from "../../types";
+import { character } from "../../config/types";
 import { RootState } from "../store";
 
 interface CharacterState {

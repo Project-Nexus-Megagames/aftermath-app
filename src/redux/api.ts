@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { apiCall } from "../types";
+import { apiCall } from "../config/types";
 
 export const apiCallBegan = createAction<apiCall>("api/callBegan");
 export const apiCallSuccess = createAction("api/callSuccess");

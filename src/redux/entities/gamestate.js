@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
-import { gameServer } from "../../config";
+import { gameServer } from "../../config/config";
 import { apiCallBegan } from "../api"; // Import Redux API call
 
 // Create entity slice of the store

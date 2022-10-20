@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 // import playTrack from "../../scripts/audio";
 import jwtDecode from "jwt-decode"; // JSON web-token decoder
-import { character, user } from "../../types";
+import { character, user } from "../../config/types";
 
 interface AuthState {
   user: user | undefined | null;

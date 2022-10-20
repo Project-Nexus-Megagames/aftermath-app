@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, MarkerF, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { mapstyle } from '../config/mapStyles';
-import { Box, Button, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Spinner, Text, useDisclosure } from '@chakra-ui/react';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
 const libraries = ['places'];
@@ -19,11 +19,19 @@ type Location =
 
 export const AftermathMap = () => {
 	const [location, setLocation] = useState({ lat: 40.712776, lng: -74.005974 });
-	const [showWindow, setShowWindow] = useState(false);
+	const [infoLocation, setInfoLocation] = useState({ lat: 0, lng: 0 });
+	const { isOpen: showInfo, onToggle: toggleInfo, onOpen: openInfo, onClose: closeInfo } = useDisclosure();
 
 	const newLocation = (location: Location) => {
 		if (location) setLocation(location);
 	};
+
+	const openWindow = (location: Location) => {
+		if (location) {
+			setInfoLocation(location);
+			openInfo();
+		}
+	}
 
 	const mapOptions = {
 		styles: mapstyle,
@@ -51,18 +59,20 @@ export const AftermathMap = () => {
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
 				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => newLocation(e.latLng?.toJSON())}>
-					<MarkerF
+					<Marker
 						position={location}
 						icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
 						draggable={true}
 						onDragEnd={(e) => newLocation(e.latLng?.toJSON())}
+						onClick={(e) => openWindow(e.latLng?.toJSON())}
 					>
-						<InfoWindow>
-							<div>
-								<h1>InfoWindow</h1>
-							</div>
-						</InfoWindow>
-					</MarkerF>
+						{ showInfo ? <InfoWindow
+							onCloseClick={() => closeInfo()}
+							zIndex={1000}
+						>
+							<Text>Info Window</Text>
+						</InfoWindow> : null}
+					</Marker>
 				</GoogleMap>
 			</LoadScript>
 		</Box>

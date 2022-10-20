@@ -1,3 +1,5 @@
+import { NumberLiteralType } from 'typescript';
+
 export interface Character {
 	_id: string;
 	playerName: string;
@@ -17,16 +19,26 @@ export interface Character {
 	knownContacts: Character[];
 }
 
-export interface Team {}
+export type Location = {
+	lat: number;
+	lng: number;
+};
+export interface Team {
+	homebase: Location;
+}
 
-export interface Unit {}
+export interface Unit {
+	location: Location;
+}
 
 export interface User {
 	username: string | undefined;
 }
 
 export interface Poi {
-	username: string | undefined;
+	_id: string;
+	type: string;
+	location: Location;
 }
 export interface Auth {
 	user: User;

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { Location } from '../config/types';
 import { useAppDispatch } from '../hooks/typedStoreHooks';
-import { poiUpdated } from '../redux/entities/pois';
+import { poiAdded, poiUpdated } from '../redux/entities/pois';
 import cluster from 'cluster';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
@@ -39,6 +39,15 @@ export const AftermathMap = () => {
 				dispatch(poiUpdated(newPoi));
 			}
 		}
+	};
+
+	const handleAddPoi = (location: Location) => {
+		console.log(location);
+		const newPoi = {
+			_id: (pois.length + 1).toString(),
+			location: { lat: location.lat, lng: location.lng }
+		};
+		dispatch(poiAdded(newPoi));
 	};
 
 	const openWindow = (location: Location) => {
@@ -76,29 +85,30 @@ export const AftermathMap = () => {
 	return (
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
-				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10}>
-					<MarkerClusterer>
+				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => handleAddPoi(e.latLng!.toJSON())}>
+					{/*<MarkerClusterer>
 						{/*@ts-ignore*/}
-						{(clusterer) => {
-							pois.map((poi) => (
-								<MarkerF
-									key={poi._id}
-									position={{ lat: poi.location.lat, lng: poi.location.lng }}
-									icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
-									draggable={true}
-									onDragEnd={(e) => updateLocation(poi._id, e.latLng!.toJSON())}
-									onClick={() => handleActiveMarker(poi._id)}
-									clusterer={clusterer}
-								>
-									{activeMarker === poi._id ? (
-										<InfoWindowF onCloseClick={() => closeInfo()} zIndex={1000}>
-											<Text>Info Window</Text>
-										</InfoWindowF>
-									) : null}
-								</MarkerF>
-							));
-						}}
-					</MarkerClusterer>
+					{/*{(clusterer) => {*/}
+					{pois.map((poi) => (
+						<MarkerF
+							key={poi._id}
+							position={{ lat: poi.location.lat, lng: poi.location.lng }}
+							icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
+							draggable={true}
+							onDragEnd={(e) => updateLocation(poi._id, e.latLng!.toJSON())}
+							onClick={() => handleActiveMarker(poi._id)}
+							//clusterer={clusterer}
+						>
+							{activeMarker === poi._id ? (
+								<InfoWindowF onCloseClick={() => closeInfo()} zIndex={1000}>
+									<Text>Info Window</Text>
+								</InfoWindowF>
+							) : null}
+						</MarkerF>
+					))}
+
+					{/*}
+					</MarkerClusterer>*/}
 				</GoogleMap>
 			</LoadScript>
 		</Box>

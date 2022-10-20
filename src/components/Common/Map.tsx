@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { GoogleMap, LoadScript, MarkerF, InfoWindowF, MarkerClusterer } from '@react-google-maps/api';
-import { mapstyle } from '../config/mapStyles';
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { mapstyle } from '../../config/mapStyles';
+import { Box, useDisclosure, Center } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { Location } from '../config/types';
-import { useAppDispatch } from '../hooks/typedStoreHooks';
-import { poiAdded, poiUpdated } from '../redux/entities/pois';
-import cluster from 'cluster';
+import { RootState } from '../../redux/store';
+import { Location } from '../../config/types';
+import { useAppDispatch } from '../../hooks/typedStoreHooks';
+import { poiAdded } from '../../redux/entities/pois';
+import { Marker } from './Marker';
+import { MapDrawer } from './MapDrawer';
+import { Poi } from '../../config/types';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
 const libraries = ['places'];
@@ -21,24 +23,12 @@ export const AftermathMap = () => {
 	/** useDisclosure hook for full hook version of persistance */
 	const { isOpen: showInfo, onToggle: toggleInfo, onOpen: openInfo, onClose: closeInfo } = useDisclosure();
 	const pois = useSelector((state: RootState) => state.pois.list);
-	const [activeMarker, setActiveMarker] = useState('');
+	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
+	const [articleModal, setArticleModal] = useState(false);
 
-	const handleActiveMarker = (marker: string) => {
-		if (marker === activeMarker) {
-			return;
-		}
+	const handleActiveMarker = (marker: Poi) => {
 		setActiveMarker(marker);
-	};
-
-	const updateLocation = (id: string, location: Location) => {
-		if (id && location) {
-			const poi = pois.find((el) => el._id === id);
-			if (poi) {
-				const newPoi = { ...poi };
-				newPoi.location = location;
-				dispatch(poiUpdated(newPoi));
-			}
-		}
+		setArticleModal(true);
 	};
 
 	const handleAddPoi = (location: Location) => {
@@ -85,34 +75,24 @@ export const AftermathMap = () => {
 	return (
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
-				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => handleAddPoi(e.latLng!.toJSON())}>
+				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onRightClick={(e) => handleAddPoi(e.latLng!.toJSON())}>
 					{/*<MarkerClusterer>
 						{/*@ts-ignore*/}
 					{/*{(clusterer) => {*/}
 					{pois.map((poi) => (
-						<MarkerF
+						<Marker
 							key={poi._id}
-							position={{ lat: poi.location.lat, lng: poi.location.lng }}
-							icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
-							draggable={true}
-							onDragEnd={(e) => updateLocation(poi._id, e.latLng!.toJSON())}
-							onClick={() => handleActiveMarker(poi._id)}
+							poi={poi}
+							onClick={() => handleActiveMarker(poi)}
 							//clusterer={clusterer}
-						>
-							{activeMarker === poi._id ? (
-								<InfoWindowF onCloseClick={() => closeInfo()} zIndex={1000}>
-									<Text>Info Window</Text>
-								</InfoWindowF>
-							) : null}
-						</MarkerF>
+						/>
 					))}
 
 					{/*}
 					</MarkerClusterer>*/}
 				</GoogleMap>
 			</LoadScript>
+			<MapDrawer isOpen={articleModal} poi={activeMarker} closeDrawer={() => setArticleModal(false)} />
 		</Box>
 	);
 };
-
-//Hide and show InfoWindow: https://codesandbox.io/s/react-google-mapsapi-multiple-markers-infowindow-h6vlq?file=/src/Map.js

@@ -38,6 +38,9 @@ export interface User {
 export interface Poi {
 	_id: string;
 	type: string;
+	title: string;
+	body?: string;
+	comment?: string;
 	location: Location;
 }
 export interface Auth {

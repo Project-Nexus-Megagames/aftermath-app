@@ -19,11 +19,14 @@ const slice = createSlice({
 		list: [
 			{
 				_id: '1',
+				title: 'Test Poi 1 title',
+				body: 'Test Poi 1 body',
+				comment: 'Test Poi 1 comment',
 				type: 'danger',
 				location: { lat: 40.712776, lng: -74.005974 }
 			},
-			{ _id: '2', type: 'danger', location: { lat: 44.712776, lng: -78.005974 } },
-			{ _id: '3', type: 'danger', location: { lat: 50.712776, lng: -80.005974 } }
+			{ _id: '2', title: 'Test Poi 2 title', body: 'Test Poi 2 body', comment: 'Test Poi 2 comment', type: 'danger', location: { lat: 44.712776, lng: -78.005974 } },
+			{ _id: '3', title: 'Test Poi 3 title', body: 'Test Poi 3 body', comment: 'Test Poi 3 comment', type: 'danger', location: { lat: 50.712776, lng: -80.005974 } }
 		],
 		loading: false,
 		loaded: false,

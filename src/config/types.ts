@@ -1,4 +1,4 @@
-export interface character {
+export interface Character {
 	_id: string;
 	playerName: string;
 	characterName: string;
@@ -14,29 +14,32 @@ export interface character {
 	color: string;
 	profilePicture?: string;
 	team?: string;
-	knownContacts: character[];
+	knownContacts: Character[];
 }
 
-export interface team {}
+export interface Team {}
 
-export interface unit {}
+export interface Unit {}
 
-export interface user {
+export interface User {
 	username: string | undefined;
 }
 
-export interface auth {
-	user: user;
-	character: character | undefined;
+export interface Poi {
+	username: string | undefined;
+}
+export interface Auth {
+	user: User;
+	character: Character | undefined;
 	login: boolean;
 	lastLogin: number | null;
 	control: boolean;
-	users: user[];
+	users: User[];
 	loadComplete: boolean;
 	//error: null,
 }
 
-export interface apiCall {
+export interface ApiCall {
 	url: string;
 	method: 'get' | 'post';
 	data: { [index: string]: unknown };

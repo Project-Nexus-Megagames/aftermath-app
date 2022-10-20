@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import { gameServer } from '../config/config';
 // import store from "./redux/store";
-import { user, character } from '../config/types';
+import { User, Character } from '../config/types';
 
 const URL = gameServer;
 const socket = io(URL, { autoConnect: false });
@@ -11,7 +11,7 @@ const socket = io(URL, { autoConnect: false });
 //   console.log(args);
 // });
 
-export function initConnection(user: user, character: character, version: string) {
+export function initConnection(user: User, character: Character, version: string) {
 	console.log('Socket Connecting....');
 	socket.auth = { username: user.username, character: character ? character.characterName : 'Unassigned', version };
 

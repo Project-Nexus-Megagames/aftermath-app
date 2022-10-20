@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF, InfoWindow } from '@react-google-maps/api';
 import { mapstyle } from '../config/mapStyles';
 import { Box, Button, Spinner, Text, useDisclosure } from '@chakra-ui/react';
 
@@ -19,7 +19,7 @@ type Location =
 
 export const AftermathMap = () => {
 	const [location, setLocation] = useState({ lat: 40.712776, lng: -74.005974 });
-	const [infoLocation, setInfoLocation] = useState({ lat: 0, lng: 0 });
+	/** useDisclosure hook for full hook version of persistance */
 	const { isOpen: showInfo, onToggle: toggleInfo, onOpen: openInfo, onClose: closeInfo } = useDisclosure();
 
 	const newLocation = (location: Location) => {
@@ -28,7 +28,6 @@ export const AftermathMap = () => {
 
 	const openWindow = (location: Location) => {
 		if (location) {
-			setInfoLocation(location);
 			openInfo();
 		}
 	}
@@ -59,7 +58,7 @@ export const AftermathMap = () => {
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
 				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onClick={(e) => newLocation(e.latLng?.toJSON())}>
-					<Marker
+					<MarkerF
 						position={location}
 						icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
 						draggable={true}
@@ -72,7 +71,7 @@ export const AftermathMap = () => {
 						>
 							<Text>Info Window</Text>
 						</InfoWindow> : null}
-					</Marker>
+					</MarkerF>
 				</GoogleMap>
 			</LoadScript>
 		</Box>

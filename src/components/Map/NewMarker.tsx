@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MarkerForm } from './MarkerForm';
-import { Button, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Text } from '@chakra-ui/react';
+import { Drawer, DrawerBody, DrawerOverlay, DrawerContent } from '@chakra-ui/react';
 import { Location } from '../../config/types';
 
 interface DrawerProps {
@@ -22,7 +22,7 @@ export const NewMarker: React.FC<DrawerProps> = ({ isOpen: open, closeDrawer, ne
 			<DrawerOverlay />
 			<DrawerContent>
 				<DrawerBody>
-					<MarkerForm onCancel={() => closeDrawer()} onSubmit={() => closeDrawer()} location={newLocation} />;
+					<MarkerForm onCancel={() => closeDrawer()} onSubmit={() => closeDrawer()} location={newLocation} />
 				</DrawerBody>
 			</DrawerContent>
 		</Drawer>

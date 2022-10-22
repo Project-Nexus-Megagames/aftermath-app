@@ -4,6 +4,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 //import socket from '../../socket';
 import { Poi, Location } from '../../config/types';
+import { useAppDispatch } from '../../hooks/typedStoreHooks';
+import { poiAdded } from '../../redux/entities/pois';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 interface PoiFormProps {
 	onSubmit: () => void;
@@ -21,6 +25,8 @@ type FormValues = {
 };
 
 export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, location }) => {
+	const pois = useSelector((state: RootState) => state.pois.list);
+	const dispatch = useAppDispatch();
 	const defaultValues: FormValues = {
 		location: location ? location : { lat: 0, lng: 0 },
 		title: '',
@@ -56,8 +62,10 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 		e?.preventDefault();
 
 		if (onSubmit instanceof Function) onSubmit();
-
-		console.log(data);
+		const newPoi = { ...data };
+		newPoi._id = (pois.length + 1).toString();
+		dispatch(poiAdded(newPoi));
+		console.log(newPoi);
 	};
 
 	const handleCancel = () => {

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDisclosure, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { Poi } from '../../config/types';
 
 interface DrawerProps {

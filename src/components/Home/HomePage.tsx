@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { SimpleGrid, VStack, Box, Flex } from '@chakra-ui/react';
-import { AftermathMap } from '../Common/Map';
+import { AftermathMap } from '../Map/Map';
 import NavigationBar from '../Common/NavigationBar';
 
 const HomePage = () => {

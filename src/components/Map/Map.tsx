@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { mapstyle } from '../../config/mapStyles';
-import { Box, useDisclosure, Center } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Location } from '../../config/types';
@@ -10,9 +10,9 @@ import { poiAdded } from '../../redux/entities/pois';
 import { Marker } from './Marker';
 import { MapDrawer } from './MapDrawer';
 import { Poi } from '../../config/types';
+import { NewMarker } from './NewMarker';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
-const libraries = ['places'];
 const mapContainerStyle = {
 	width: '100%',
 	height: '100%'
@@ -20,35 +20,37 @@ const mapContainerStyle = {
 
 export const AftermathMap = () => {
 	const dispatch = useAppDispatch();
-	/** useDisclosure hook for full hook version of persistance */
-	const { isOpen: showInfo, onToggle: toggleInfo, onOpen: openInfo, onClose: closeInfo } = useDisclosure();
 	const pois = useSelector((state: RootState) => state.pois.list);
 	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
-	const [articleModal, setArticleModal] = useState(false);
+	const [markerModal, setMarkerModal] = useState(false);
+	const [newMarkerModal, setNewMarkerModal] = useState(false);
+	const [newLocation, setNewLocation] = useState({ lat: 0, lng: 0 });
+
+	useEffect(() => {
+		const handleContextmenu = (e: MouseEvent) => {
+			e.preventDefault();
+		};
+		document.addEventListener('contextmenu', handleContextmenu);
+		return function cleanup() {
+			document.removeEventListener('contextmenu', handleContextmenu);
+		};
+	}, []);
 
 	const handleActiveMarker = (marker: Poi) => {
 		setActiveMarker(marker);
-		setArticleModal(true);
+		setMarkerModal(true);
 	};
 
-	const handleAddPoi = (location: Location) => {
-		console.log(location);
+	const handleAddPoi = (location: Location, e: google.maps.MapMouseEvent) => {
+		e.domEvent.preventDefault();
 		const newPoi = {
 			_id: (pois.length + 1).toString(),
 			location: { lat: location.lat, lng: location.lng }
 		};
 		dispatch(poiAdded(newPoi));
+		setNewMarkerModal(true);
+		setNewLocation(location);
 	};
-
-	const openWindow = (location: Location) => {
-		if (location) {
-			openInfo();
-		}
-	};
-	//const clusterOptions = {
-	//	imageExtension: 'png',
-	//	imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
-	//};
 
 	const mapOptions = {
 		styles: mapstyle,
@@ -63,8 +65,8 @@ export const AftermathMap = () => {
 		//     west: 1000,
 		//   },
 		// },
-		minZoom: 3,
-		maxZoom: 9,
+		minZoom: 0,
+		maxZoom: 20,
 		mapTypeId: 'terrain'
 	};
 	const center = {
@@ -75,24 +77,23 @@ export const AftermathMap = () => {
 	return (
 		<Box bg="blue" h="100vh" w="100%">
 			<LoadScript googleMapsApiKey={MAPKEY}>
-				<GoogleMap mapContainerStyle={mapContainerStyle} options={mapOptions} center={center} zoom={10} onRightClick={(e) => handleAddPoi(e.latLng!.toJSON())}>
-					{/*<MarkerClusterer>
-						{/*@ts-ignore*/}
-					{/*{(clusterer) => {*/}
+				<GoogleMap
+					mapContainerStyle={mapContainerStyle}
+					options={mapOptions}
+					center={center}
+					zoom={10}
+					onRightClick={(e) => {
+						handleAddPoi(e.latLng!.toJSON(), e);
+						e.domEvent.preventDefault();
+					}}
+				>
 					{pois.map((poi) => (
-						<Marker
-							key={poi._id}
-							poi={poi}
-							onClick={() => handleActiveMarker(poi)}
-							//clusterer={clusterer}
-						/>
+						<Marker key={poi._id} poi={poi} onClick={() => handleActiveMarker(poi)} />
 					))}
-
-					{/*}
-					</MarkerClusterer>*/}
 				</GoogleMap>
 			</LoadScript>
-			<MapDrawer isOpen={articleModal} poi={activeMarker} closeDrawer={() => setArticleModal(false)} />
+			<MapDrawer isOpen={markerModal} poi={activeMarker} closeDrawer={() => setMarkerModal(false)} />
+			<NewMarker isOpen={newMarkerModal} newLocation={newLocation} closeDrawer={() => setNewMarkerModal(false)} />
 		</Box>
 	);
 };

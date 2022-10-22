@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MarkerF } from '@react-google-maps/api';
 import { Poi, Location } from '../../config/types';
 import { poiUpdated } from '../../redux/entities/pois';

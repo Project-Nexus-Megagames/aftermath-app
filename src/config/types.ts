@@ -1,5 +1,3 @@
-import { NumberLiteralType } from 'typescript';
-
 export interface Character {
 	_id: string;
 	playerName: string;
@@ -43,6 +41,7 @@ export interface Poi {
 	comment?: string;
 	location: Location;
 }
+
 export interface Auth {
 	user: User;
 	character: Character | undefined;

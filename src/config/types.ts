@@ -38,8 +38,8 @@ export interface Poi {
 	type: string;
 	title: string;
 	body?: string;
-	comment?: string;
 	location: Location;
+	creator: string;
 }
 
 export interface Auth {

@@ -39,7 +39,7 @@ export interface Poi {
 	title: string;
 	body?: string;
 	location: Location;
-	creator: string;
+	creator?: string;
 }
 
 export interface Auth {

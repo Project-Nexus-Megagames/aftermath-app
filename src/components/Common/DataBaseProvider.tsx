@@ -1,21 +1,22 @@
+//@ts-nocheck
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-//import { loadIngredients } from '../store/ingredients';
-//import { loadRecipes } from '../store/recipes';
+import { loadPois } from '../../redux/entities/pois';
 
 interface DBProps {
-  children?: React.ReactNode;
+	children?: React.ReactNode;
 }
 
-const DatabaseProvider = (props:DBProps) => {
-  const dispatch = useDispatch();
+const DatabaseProvider = (props: DBProps) => {
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    //dispatch(loadRecipes());
-    //dispatch(loadIngredients());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(loadPois());
+		//dispatch(loadIngredients());
+	}, [dispatch]);
 
-  return <>{props.children}</>;
+	return <>{props.children}</>;
 };
 
 export default DatabaseProvider;

@@ -17,15 +17,15 @@ const slice = createSlice({
 	name: 'pois',
 	initialState: {
 		list: [
-			{
-				_id: '1',
-				title: 'Test Poi 1 title',
-				body: 'Test Poi 1 body',
-				type: 'danger',
-				location: { lat: 40.712776, lng: -74.005974 }
-			},
-			{ _id: '2', title: 'Test Poi 2 title', body: 'Test Poi 2 body', type: 'danger', location: { lat: 44.712776, lng: -78.005974 } },
-			{ _id: '3', title: 'Test Poi 3 title', body: 'Test Poi 3 body', type: 'danger', location: { lat: 50.712776, lng: -80.005974 } }
+			//{
+			//	_id: '1',
+			//	title: 'Test Poi 1 title',
+			//	body: 'Test Poi 1 body',
+			//	type: 'danger',
+			//	location: { lat: 40.712776, lng: -74.005974 }
+			//},
+			//{ _id: '2', title: 'Test Poi 2 title', body: 'Test Poi 2 body', type: 'danger', location: { lat: 44.712776, lng: -78.005974 } },
+			//{ _id: '3', title: 'Test Poi 3 title', body: 'Test Poi 3 body', type: 'danger', location: { lat: 50.712776, lng: -80.005974 } }
 		],
 		loading: false,
 		loaded: false,
@@ -81,17 +81,17 @@ const url = `${gameServer}api/pois`;
 
 // characters Loader into state
 // @ts-ignore
-//TODO;
+// TODO;
 
-//export const loadCharacters = (payload) => (dispatch) => {
-//	return dispatch(
-//		apiCallBegan({
-//			url,
-//			method: 'get',
-//			data: payload,
-//			onStart: charactersRequested.type,
-//			onSuccess: charactersReceived.type,
-//			onError: charactersRequestFailed.type
-//		})
-//	);
-//};
+export const loadPois = (payload) => (dispatch) => {
+	return dispatch(
+		apiCallBegan({
+			url,
+			method: 'get',
+			data: payload,
+			onStart: poisRequested.type,
+			onSuccess: poisReceived.type,
+			onError: poisRequestFailed.type
+		})
+	);
+};

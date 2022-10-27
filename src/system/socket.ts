@@ -1,22 +1,14 @@
+// TODO @ts-nocheck
+
 import { io } from 'socket.io-client';
 import { gameServer } from '../config/config';
-// import store from "./redux/store";
-import { User, Character } from '../config/types';
+// import { Socket } from "./socket.types";
 
-const URL = gameServer;
-const socket = io(URL, { autoConnect: false });
-
-// DEBUG event showing any event thrown over the socket in console
-// socket.onAny((event, ...args) => {
-//   console.log(args);
-// });
-
-export function initConnection(user: User, character: Character, version: string) {
-	console.log('Socket Connecting....');
-	socket.auth = { username: user.username, character: character ? character.characterName : 'Unassigned', version };
-
-	//console.log(socket);
-	socket.connect();
-}
-
-export default socket;
+const uri = gameServer;
+/**
+ * Original connection of socket.io that will connect the entire system. This will then be used by the SocketProvider
+ */
+export const socket = io(uri, {
+	withCredentials: true,
+	autoConnect: false
+});

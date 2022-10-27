@@ -9,6 +9,7 @@ import { Marker } from './Marker';
 import { MapDrawer } from './MapDrawer';
 import { Poi } from '../../config/types';
 import { NewMarker } from './NewMarker';
+import { useSocket } from '../../hooks/webSocketHook';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
 const mapContainerStyle = {
@@ -18,12 +19,15 @@ const mapContainerStyle = {
 
 export const AftermathMap = () => {
 	const pois = useSelector((state: RootState) => state.pois.list);
+	const { socket, connectSocket } = useSocket();
 	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
 	const [newLocation, setNewLocation] = useState({ lat: 0, lng: 0 });
 
 	useEffect(() => {
+		//TODO this will need to go to the login section / callback function
+		connectSocket();
 		const handleContextmenu = (e: MouseEvent) => {
 			e.preventDefault();
 		};
@@ -44,6 +48,7 @@ export const AftermathMap = () => {
 			_id: (pois.length + 1).toString(),
 			location: { lat: location.lat, lng: location.lng }
 		};
+		socket.emit('request', { route: 'poi', action: 'create', newPoi });
 		setNewMarkerModal(true);
 		setNewLocation(location);
 	};

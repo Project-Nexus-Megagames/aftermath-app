@@ -19,7 +19,7 @@ const mapContainerStyle = {
 
 export const AftermathMap = () => {
 	const pois = useSelector((state: RootState) => state.pois.list);
-	const { socket, connectSocket } = useSocket();
+	const { connectSocket } = useSocket();
 	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
@@ -48,7 +48,7 @@ export const AftermathMap = () => {
 			_id: (pois.length + 1).toString(),
 			location: { lat: location.lat, lng: location.lng }
 		};
-		socket.emit('request', { route: 'poi', action: 'create', newPoi });
+		//socket.emit('request', { route: 'poi', action: 'create', newPoi });
 		setNewMarkerModal(true);
 		setNewLocation(location);
 	};

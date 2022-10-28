@@ -8,6 +8,7 @@ const uri = gameServer;
 /**
  * Original connection of socket.io that will connect the entire system. This will then be used by the SocketProvider
  */
+// TODO fix withCredentials to true once auth is implemented
 export const socket = io(uri, {
 	withCredentials: false,
 	autoConnect: false

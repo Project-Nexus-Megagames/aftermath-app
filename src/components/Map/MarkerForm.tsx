@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, FormControl, FormLabel, Input, Stack, HStack, Textarea } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
@@ -6,6 +6,7 @@ import { DevTool } from '@hookform/devtools';
 import { Poi, Location } from '../../config/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useSocket } from '../../hooks/webSocketHook';
 
 interface PoiFormProps {
 	onSubmit: () => void;
@@ -23,6 +24,7 @@ type FormValues = {
 };
 
 export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, location }) => {
+	const { socket } = useSocket();
 	const pois = useSelector((state: RootState) => state.pois.list);
 	const defaultValues: FormValues = {
 		location: location ? location : { lat: 0, lng: 0 },
@@ -55,12 +57,24 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 		delayError: undefined
 	});
 
+	useEffect(() => {
+		//TODO this will need to go to the login section / callback function
+		//connectSocket();
+		const handleContextmenu = (e: MouseEvent) => {
+			e.preventDefault();
+		};
+		document.addEventListener('contextmenu', handleContextmenu);
+		return function cleanup() {
+			document.removeEventListener('contextmenu', handleContextmenu);
+		};
+	}, []);
+
 	const handleSubmit: SubmitHandler<FormValues> = (data, e) => {
 		e?.preventDefault();
 
 		if (onSubmit instanceof Function) onSubmit();
 		console.log(data);
-		//socket.emit('request', { route: 'poi', action: 'add', data });
+		socket.emit('request', { route: 'poi', action: 'create', data });
 	};
 
 	const handleCancel = () => {

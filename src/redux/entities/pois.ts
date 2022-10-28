@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'; // Import from reactjs toolkit
 import { gameServer } from '../../config/config';
 import { apiCallBegan } from '../api'; // Import Redux API call
-import { Location, Poi } from '../../config/types';
+import { Poi } from '../../config/types';
 import { RootState } from '../store';
 
 interface PoiState {
@@ -16,17 +16,7 @@ interface PoiState {
 const slice = createSlice({
 	name: 'pois',
 	initialState: {
-		list: [
-			//{
-			//	_id: '1',
-			//	title: 'Test Poi 1 title',
-			//	body: 'Test Poi 1 body',
-			//	type: 'danger',
-			//	location: { lat: 40.712776, lng: -74.005974 }
-			//},
-			//{ _id: '2', title: 'Test Poi 2 title', body: 'Test Poi 2 body', type: 'danger', location: { lat: 44.712776, lng: -78.005974 } },
-			//{ _id: '3', title: 'Test Poi 3 title', body: 'Test Poi 3 body', type: 'danger', location: { lat: 50.712776, lng: -80.005974 } }
-		],
+		list: [],
 		loading: false,
 		loaded: false,
 		lastFetch: null,
@@ -79,7 +69,7 @@ const url = `${gameServer}api/pois`;
 
 // Selectors
 
-// characters Loader into state
+// Loader into state
 // @ts-ignore
 // TODO;
 

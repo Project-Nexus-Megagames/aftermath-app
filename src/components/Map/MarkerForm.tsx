@@ -58,8 +58,6 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 	});
 
 	useEffect(() => {
-		//TODO this will need to go to the login section / callback function
-		//connectSocket();
 		const handleContextmenu = (e: MouseEvent) => {
 			e.preventDefault();
 		};

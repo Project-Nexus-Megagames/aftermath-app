@@ -44,11 +44,6 @@ export const AftermathMap = () => {
 
 	const handleAddPoi = (location: Location, e: google.maps.MapMouseEvent) => {
 		e.domEvent.preventDefault();
-		const newPoi = {
-			_id: (pois.length + 1).toString(),
-			location: { lat: location.lat, lng: location.lng }
-		};
-		//socket.emit('request', { route: 'poi', action: 'create', newPoi });
 		setNewMarkerModal(true);
 		setNewLocation(location);
 	};

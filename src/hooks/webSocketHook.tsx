@@ -30,7 +30,8 @@ export const SocketContextProvider: React.FC<{ children: ReactElement | ReactEle
 	useEffect(() => {
 		if (isConnected && connectToast.current) {
 			toast.update(connectToast.current, {
-				description: `${user?.username} Connected to sockets!`,
+				//description: `${user?.username} Connected to sockets!`,
+				description: `TestUser Connected to sockets!`,
 				status: 'success'
 			});
 		}

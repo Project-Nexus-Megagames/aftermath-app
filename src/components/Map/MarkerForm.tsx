@@ -7,6 +7,8 @@ import { Poi, Location } from '../../config/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useSocket } from '../../hooks/webSocketHook';
+import { useAppDispatch } from '../../hooks/typedStoreHooks';
+import { poiAdded } from '../../redux/entities/pois';
 
 interface PoiFormProps {
 	onSubmit: () => void;
@@ -24,6 +26,8 @@ type FormValues = {
 };
 
 export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, location }) => {
+	const dispatch = useAppDispatch();
+
 	const { socket } = useSocket();
 	const pois = useSelector((state: RootState) => state.pois.list);
 	const defaultValues: FormValues = {
@@ -69,10 +73,9 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 
 	const handleSubmit: SubmitHandler<FormValues> = (data, e) => {
 		e?.preventDefault();
-
 		if (onSubmit instanceof Function) onSubmit();
-		console.log(data);
 		socket.emit('request', { route: 'poi', action: 'create', data });
+		// dispatch(poiAdded(data)); // This works
 	};
 
 	const handleCancel = () => {

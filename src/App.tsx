@@ -6,7 +6,9 @@ import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import theme from './styles/Theme';
 import HomePage from './components/Home/HomePage';
 import { SocketContextProvider } from './hooks/webSocketHook';
+import initUpdates from './redux/initUpdate';
 
+initUpdates();
 function App() {
 	return (
 		<main className="container">

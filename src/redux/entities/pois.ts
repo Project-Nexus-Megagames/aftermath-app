@@ -42,8 +42,9 @@ const slice = createSlice({
 			pois.loading = false;
 		},
 		poiAdded: (pois, action) => {
-			console.log(`${action.type} Dispatched`);
+			console.log(`${action.type} Dispatched`, action.payload);
 			pois.list.push(action.payload);
+			pois.loading = false;
 		},
 		poiDeleted: (pois, action) => {
 			console.log(`${action.type} Dispatched`);
@@ -51,7 +52,7 @@ const slice = createSlice({
 			pois.list.splice(index, 1);
 		},
 		poiUpdated: (pois, action) => {
-			console.log(`${action.type} Dispatched`);
+			console.log(`${action.type} Dispatched`, action.payload);
 			const index = pois.list.findIndex((el) => el._id === action.payload._id);
 			pois.list[index] = action.payload;
 			pois.loading = false;

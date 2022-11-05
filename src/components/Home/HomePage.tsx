@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { SimpleGrid, VStack, Box, Flex } from '@chakra-ui/react';
+// import { useSelector } from 'react-redux';
+import { VStack, Box } from '@chakra-ui/react';
 import { AftermathMap } from '../Map/Map';
 import NavigationBar from '../Common/NavigationBar';
 

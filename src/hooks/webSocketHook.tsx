@@ -4,6 +4,7 @@ import { Socket } from 'socket.io-client';
 import { useToast } from '@chakra-ui/react';
 import { socket } from '../system/socket';
 import { useAppDispatch, useAppSelector } from './typedStoreHooks';
+import { poiAdded, poiUpdated } from '../redux/entities/pois';
 
 interface SocketHook {
 	socket: Socket;
@@ -57,10 +58,56 @@ export const SocketContextProvider: React.FC<{ children: ReactElement | ReactEle
 			}, 10000);
 		});
 
+
+		socket.on('updateClients', (data) => {
+			console.log('updateClients');
+			for (const el of data) {
+				switch (el.model) {
+					case 'Poi':
+						reduxAction(poiUpdated(el));
+						break;
+					default:
+						console.log(`Unable to update Redux for ${el.model}: ${el._id}`);
+						break;
+				}
+			}
+		});
+
+		socket.on('createClients', (data) => {
+			console.log('createClients');
+			for (const el of data) {
+				switch (el.model) {
+					case 'Poi':
+						reduxAction(poiAdded(el));
+						break;
+					default:
+						console.log(`Unable to add Redux for ${el.model}: ${el._id}`);
+						break;
+				}
+			}
+		});
+
+		socket.on('deleteClients', (data) => {
+			console.log('deleteClients');
+			for (const el of data) {
+				switch (el.model) {
+					case 'Poi':
+						reduxAction(poiDeleted(el));
+						break;
+					default:
+						console.log(`Unable to add Redux for ${el.model}: ${el.id}`);
+						break;
+				}
+			}
+		});
+
 		return () => {
 			socket.off('connect');
 			socket.off('disconnect');
 			socket.off('connect_error');
+			socket.off('updateClients');
+			socket.off('createClients');
+			socket.off('deleteClients');
 		};
 	}, []);
 
@@ -87,6 +134,7 @@ export const SocketContextProvider: React.FC<{ children: ReactElement | ReactEle
 	/**
 	 * Connects socket to the socket server if it isn't already connected
 	 */
+
 	const connectSocket = () => {
 		connectToast.current = toast({
 			//description: `Connecting ${user?.username} to sockets...`,

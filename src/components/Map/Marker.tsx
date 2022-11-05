@@ -1,8 +1,7 @@
 import React from 'react';
 import { MarkerF } from '@react-google-maps/api';
 import { Poi, Location } from '../../config/types';
-import { poiUpdated } from '../../redux/entities/pois';
-import { useAppDispatch } from '../../hooks/typedStoreHooks';
+import { useSocket } from '../../hooks/webSocketHook';
 
 interface Props {
 	poi: Poi;
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export const Marker: React.FC<Props> = ({ poi, onClick }) => {
-	const dispatch = useAppDispatch();
+	const { socket } = useSocket();
 
 	const getIcon = (type: string) => {
 		if (type) {
@@ -23,7 +22,7 @@ export const Marker: React.FC<Props> = ({ poi, onClick }) => {
 	const updateLocation = (poi: Poi, location: Location) => {
 		const newPoi = { ...poi };
 		newPoi.location = location;
-		dispatch(poiUpdated(newPoi));
+		socket.emit('request', { route: 'poi', action: 'update', data: newPoi });
 	};
 
 	return (

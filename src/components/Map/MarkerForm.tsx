@@ -26,10 +26,7 @@ type FormValues = {
 };
 
 export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, location }) => {
-	const dispatch = useAppDispatch();
-
 	const { socket } = useSocket();
-	const pois = useSelector((state: RootState) => state.pois.list);
 	const defaultValues: FormValues = {
 		location: location ? location : { lat: 0, lng: 0 },
 		title: '',
@@ -75,7 +72,6 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 		e?.preventDefault();
 		if (onSubmit instanceof Function) onSubmit();
 		socket.emit('request', { route: 'poi', action: 'create', data });
-		// dispatch(poiAdded(data)); // This works
 	};
 
 	const handleCancel = () => {
@@ -88,23 +84,23 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 			<Stack>
 				<FormControl isRequired>
 					<HStack>
-						<FormLabel m={0} htmlFor="title">
+						<FormLabel m={0} htmlFor='title'>
 							Title
 						</FormLabel>
 					</HStack>
-					<Input id="title" placeholder="title" {...register('title')} />
+					<Input id='title' placeholder='title' {...register('title')} />
 				</FormControl>
 				<FormControl isRequired>
 					<HStack>
-						<FormLabel m={0} htmlFor="body">
+						<FormLabel m={0} htmlFor='body'>
 							Body
 						</FormLabel>
 					</HStack>
-					<Textarea isRequired id="body" resize={'vertical'} placeholder="Body" noOfLines={40} {...register('body')} />
+					<Textarea isRequired id='body' resize={'vertical'} placeholder='Body' noOfLines={40} {...register('body')} />
 				</FormControl>
-				<DevTool control={control} placement="bottom-right" />
-				<Button type="submit" colorScheme="green" disabled={!isValid} onClick={formSubmit(handleSubmit)}>{`Save as Draft`}</Button>
-				<Button colorScheme="red" onClick={() => handleCancel()}>{`Cancel`}</Button>
+				<DevTool control={control} placement='bottom-right' />
+				<Button type='submit' colorScheme='green' disabled={!isValid} onClick={formSubmit(handleSubmit)}>{`Save as Draft`}</Button>
+				<Button colorScheme='red' onClick={() => handleCancel()}>{`Cancel`}</Button>
 			</Stack>
 		</form>
 	);

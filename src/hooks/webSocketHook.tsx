@@ -4,7 +4,7 @@ import { Socket } from 'socket.io-client';
 import { useToast } from '@chakra-ui/react';
 import { socket } from '../system/socket';
 import { useAppDispatch, useAppSelector } from './typedStoreHooks';
-import { poiAdded, poiUpdated } from '../redux/entities/pois';
+import { poiAdded, poiUpdated, poiDeleted } from '../redux/entities/pois';
 
 interface SocketHook {
 	socket: Socket;
@@ -57,7 +57,6 @@ export const SocketContextProvider: React.FC<{ children: ReactElement | ReactEle
 				socket.connect();
 			}, 10000);
 		});
-
 
 		socket.on('updateClients', (data) => {
 			console.log('updateClients');

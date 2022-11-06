@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, FormControl, FormLabel, Input, Stack, HStack, Textarea } from '@chakra-ui/react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { Button, FormControl, FormLabel, Input, Stack, HStack, Textarea, Radio, RadioGroup } from '@chakra-ui/react';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-//import socket from '../../socket';
 import { Poi, Location } from '../../config/types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { useSocket } from '../../hooks/webSocketHook';
-import { useAppDispatch } from '../../hooks/typedStoreHooks';
-import { poiAdded } from '../../redux/entities/pois';
+import { poiMarkerTypes } from './../../system/enums';
 
 interface PoiFormProps {
 	onSubmit: () => void;
@@ -30,7 +26,7 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 	const defaultValues: FormValues = {
 		location: location ? location : { lat: 0, lng: 0 },
 		title: '',
-		type: '',
+		type: poiMarkerTypes[0].value,
 		body: ''
 	};
 
@@ -98,6 +94,23 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 					</HStack>
 					<Textarea isRequired id='body' resize={'vertical'} placeholder='Body' noOfLines={40} {...register('body')} />
 				</FormControl>
+
+				<Controller
+					name={'type'}
+					control={control}
+					render={({ field: { ref, ...rest } }) => (
+						<RadioGroup {...rest}>
+							<Stack direction='row'>
+								{poiMarkerTypes.map((type, index) => (
+									<Radio value={type.value} key={index}>
+										{type.text}
+									</Radio>
+								))}
+							</Stack>
+						</RadioGroup>
+					)}
+				/>
+
 				<DevTool control={control} placement='bottom-right' />
 				<Button type='submit' colorScheme='green' disabled={!isValid} onClick={formSubmit(handleSubmit)}>{`Save as Draft`}</Button>
 				<Button colorScheme='red' onClick={() => handleCancel()}>{`Cancel`}</Button>

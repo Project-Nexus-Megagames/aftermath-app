@@ -1,98 +1,105 @@
 .App {
-  text-align: center;
-  
-  &-logo {
-    height: 40vmin;
-    pointer-events: none;
+	text-align: center;
 
-    @media (prefers-reduced-motion: no-preference) {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
+	&-logo {
+		height: 40vmin;
+		pointer-events: none;
 
-  &-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
+		@media (prefers-reduced-motion: no-preference) {
+			animation: App-logo-spin infinite 20s linear;
+		}
+	}
 
-  &-link {
-    color: #61dafb;
-  }
+	&-header {
+		background-color: #282c34;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		font-size: calc(10px + 2vmin);
+		color: white;
+	}
+
+	&-link {
+		color: #61dafb;
+	}
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .hue {
-  fill: red;
+	fill: red;
+}
+
+.labelTest {
+	text-transform: uppercase;
+	color: blue !important;
+	background-color: white;
+	position: relative;
+	bottom: -22px;
 }
 
 .hue:hover {
-  animation: pulse 10s infinite;
-  -webkit-animation: pulse 10s infinite;
+	animation: pulse 10s infinite;
+	-webkit-animation: pulse 10s infinite;
 }
 
 @keyframes pulse {
-  0% {
-    fill: #ff0000;
-  }
-  17% {
-    fill: #ffff00;
-  }
-  33% {
-    fill: #00ff00;
-  }
-  50% {
-    fill: #00ffff;
-  }
-  67% {
-    fill: #0000ff;
-  }
-  83% {
-    fill: #ff00ff;
-  }
-  100% {
-    fill: #ff0000;
-  }
+	0% {
+		fill: #ff0000;
+	}
+	17% {
+		fill: #ffff00;
+	}
+	33% {
+		fill: #00ff00;
+	}
+	50% {
+		fill: #00ffff;
+	}
+	67% {
+		fill: #0000ff;
+	}
+	83% {
+		fill: #ff00ff;
+	}
+	100% {
+		fill: #ff0000;
+	}
 }
 
 @-webkit-keyframes pulse {
-  0% {
-    fill: #ff0000;
-  }
-  17% {
-    fill: #ffff00;
-  }
-  33% {
-    fill: #00ff00;
-  }
-  50% {
-    fill: #00ffff;
-  }
-  67% {
-    fill: #0000ff;
-  }
-  83% {
-    fill: #ff00ff;
-  }
-  100% {
-    fill: #ff0000;
-  }
+	0% {
+		fill: #ff0000;
+	}
+	17% {
+		fill: #ffff00;
+	}
+	33% {
+		fill: #00ff00;
+	}
+	50% {
+		fill: #00ffff;
+	}
+	67% {
+		fill: #0000ff;
+	}
+	83% {
+		fill: #ff00ff;
+	}
+	100% {
+		fill: #ff0000;
+	}
 }
 
-
 #map * {
-  overflow:visible;
+	overflow: visible;
 }

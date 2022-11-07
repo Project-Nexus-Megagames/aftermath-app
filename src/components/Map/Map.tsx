@@ -96,8 +96,8 @@ export const AftermathMap = () => {
 	};
 
 	return (
-		<Box bg='blue' h='100vh' w='100%'>
-			<Box bg='black' h='32px' w='100%'>
+		<Box bg='white' h='100vh' w='100%'>
+			<Box bg='black' h='32px' w='100%' color='white'>
 				{/*@ts-ignore*/}
 				<CheckboxGroup onChange={(value) => handleFilter(value)} defaultValue={poiMarkerValues}>
 					<Stack direction='row'>

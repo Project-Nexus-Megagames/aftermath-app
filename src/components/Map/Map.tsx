@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { mapstyle } from '../../config/mapStyles';
-import { Box } from '@chakra-ui/react';
+import { Box, Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Location } from '../../config/types';
@@ -10,6 +10,7 @@ import { MapDrawer } from './MapDrawer';
 import { Poi } from '../../config/types';
 import { NewMarker } from './NewMarker';
 import { useSocket } from '../../hooks/webSocketHook';
+import { poiMarkerTypes } from '../../system/enums';
 
 const MAPKEY = process.env.REACT_APP_MAPKEY || '';
 const mapContainerStyle = {
@@ -18,12 +19,15 @@ const mapContainerStyle = {
 };
 
 export const AftermathMap = () => {
+	const poiMarkerValues = poiMarkerTypes.map((el) => el.value);
 	const pois = useSelector((state: RootState) => state.pois.list);
 	const { connectSocket } = useSocket();
 	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
 	const [newLocation, setNewLocation] = useState({ lat: 0, lng: 0 });
+	const [filter, setFilter] = useState(poiMarkerValues);
+	const [poisToDisplay, setPoisToDisplay] = useState([]);
 
 	useEffect(() => {
 		//TODO this will need to go to the login section / callback function
@@ -37,6 +41,21 @@ export const AftermathMap = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const filtered: Poi[] = [];
+		let temp: Poi[] = [];
+		if (filter.length !== 0) {
+			filter.map((fil) => {
+				temp = pois.filter((el) => el.type === fil);
+				console.log(temp);
+				filtered.push(...temp);
+			});
+			//@ts-ignore
+			setPoisToDisplay(filtered);
+			//@ts-ignore
+		} else setPoisToDisplay([]);
+	}, [filter, pois]);
+
 	const handleActiveMarker = (marker: Poi) => {
 		setActiveMarker(marker);
 		setMarkerModal(true);
@@ -46,6 +65,12 @@ export const AftermathMap = () => {
 		e.domEvent.preventDefault();
 		setNewMarkerModal(true);
 		setNewLocation(location);
+	};
+
+	const handleFilter = (filterValue: string[]) => {
+		console.log(filterValue);
+		// @ts-ignore
+		setFilter(filterValue);
 	};
 
 	const mapOptions = {
@@ -71,7 +96,19 @@ export const AftermathMap = () => {
 	};
 
 	return (
-		<Box bg="blue" h="100vh" w="100%">
+		<Box bg='blue' h='100vh' w='100%'>
+			<Box bg='black' h='32px' w='100%'>
+				{/*@ts-ignore*/}
+				<CheckboxGroup onChange={(value) => handleFilter(value)} defaultValue={poiMarkerValues}>
+					<Stack direction='row'>
+						{poiMarkerTypes.map((type, index) => (
+							<Checkbox value={type.value} key={index}>
+								{type.text}
+							</Checkbox>
+						))}
+					</Stack>
+				</CheckboxGroup>
+			</Box>
 			<LoadScript googleMapsApiKey={MAPKEY}>
 				<GoogleMap
 					mapContainerStyle={mapContainerStyle}
@@ -83,7 +120,8 @@ export const AftermathMap = () => {
 						e.domEvent.preventDefault();
 					}}
 				>
-					{pois.map((poi) => (
+					{poisToDisplay.map((poi) => (
+						//@ts-ignore
 						<Marker key={poi._id} poi={poi} onClick={() => handleActiveMarker(poi)} />
 					))}
 				</GoogleMap>

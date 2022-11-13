@@ -21,7 +21,7 @@ export const Marker: React.FC<Props> = ({ poi, onClick }) => {
 		<MarkerF
 			key={poi._id}
 			position={{ lat: poi.location.lat, lng: poi.location.lng }}
-			label={{ text: 'test', className: 'labelTest' }}
+			label={{ text: `${poi.title}`, className: 'labelTest' }}
 			icon={{ url: `/icons/${poi.type}.svg`, scaledSize: new google.maps.Size(24, 24) }}
 			draggable={true}
 			onDragEnd={(e) => updateLocation(poi, e.latLng!.toJSON())}

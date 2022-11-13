@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // import { useSelector } from 'react-redux';
-import { VStack, Box } from '@chakra-ui/react';
-import { AftermathMap } from '../Map/Map';
-import NavigationBar from '../Common/NavigationBar';
+import { Box, HStack } from '@chakra-ui/react';
+import { SideBar } from '../Common/SideBar';
+import { ControlMap } from '../Control/ControlMap';
 
 const HomePage = () => {
 	return (
 		<Box>
-			<NavigationBar />
-			<VStack spacing={5}>
-				<AftermathMap />
-			</VStack>
+			<HStack>
+				<SideBar />
+				<ControlMap />
+			</HStack>
 		</Box>
 	);
 };

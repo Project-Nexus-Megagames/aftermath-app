@@ -6,8 +6,8 @@ import { ControlMap } from '../Control/ControlMap';
 
 const HomePage = () => {
 	return (
-		<Box>
-			<HStack>
+		<Box bg='#F5F5F5'>
+			<HStack spacing='0'>
 				<SideBar />
 				<ControlMap />
 			</HStack>

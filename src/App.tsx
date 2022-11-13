@@ -4,19 +4,20 @@ import DatabaseProvider from './components/Common/DataBaseProvider';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import theme from './styles/Theme';
+import './styles/navbar.scss';
 import HomePage from './components/Home/HomePage';
 import { SocketContextProvider } from './hooks/webSocketHook';
 
 function App() {
 	return (
-		<main className="container">
+		<main className='container'>
 			<SocketContextProvider>
 				<DatabaseProvider>
 					<ChakraProvider theme={theme}>
 						<HashRouter>
 							<Routes>
-								<Route path="/home" element={<HomePage />} />
-								<Route path="*" element={<Navigate to="/home" replace />} />
+								<Route path='/home' element={<HomePage />} />
+								<Route path='*' element={<Navigate to='/home' replace />} />
 							</Routes>
 						</HashRouter>
 					</ChakraProvider>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { Flex, VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Poi } from '../../config/types';
-
 import { poiMarkerTypes } from '../../system/enums';
 import { AftermathMap } from '../Map/AftermathMap';
-import '../../styles/navbar.scss';
-import TopNav from '../Common/MapFilter';
+import TopNav from '../Map/TopNav';
 
 export const ControlMap = () => {
 	const poiMarkerValues = poiMarkerTypes.map((el) => el.value);
@@ -49,10 +47,10 @@ export const ControlMap = () => {
 
 	return (
 		<React.Fragment>
-			<TopNav handleFilter={handleFilter} />
-			<Flex as='main' w='100%' marginTop='100px'>
-				<AftermathMap pois={poisToDisplay} />
-			</Flex>
+			<VStack>
+				<TopNav handleFilter={handleFilter} />
+			</VStack>
+			<AftermathMap pois={poisToDisplay} />
 		</React.Fragment>
 	);
 };

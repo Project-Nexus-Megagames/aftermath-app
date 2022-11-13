@@ -40,7 +40,6 @@ export const ControlMap = () => {
 	}, [filter, pois]);
 
 	const handleFilter = (filterValue: string[]) => {
-		console.log(filterValue);
 		// @ts-ignore
 		setFilter(filterValue);
 	};

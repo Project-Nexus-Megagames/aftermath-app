@@ -1,5 +1,13 @@
 // @ts-nocheck
-import React, { createContext, ReactElement, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+	createContext,
+	ReactElement,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState
+} from 'react';
 import { Socket } from 'socket.io-client';
 import { useToast } from '@chakra-ui/react';
 import { socket } from '../system/socket';
@@ -20,7 +28,9 @@ export const SocketContext = createContext<SocketHook>({
 });
 
 /** Socket Provider wrapper for Socket.io instance */
-export const SocketContextProvider: React.FC<{ children: ReactElement | ReactElement[] }> = ({ children }) => {
+export const SocketContextProvider: React.FC<{
+	children: ReactElement | ReactElement[];
+}> = ({ children }) => {
 	// TODO this is where the authenticated user would come from redux
 	//const { user } = useAppSelector(s => s.common);
 	const reduxAction = useAppDispatch();
@@ -142,14 +152,22 @@ export const SocketContextProvider: React.FC<{ children: ReactElement | ReactEle
 			position: 'bottom-right'
 		});
 
-		socket.auth = { character: 'testCharacter', username: 'testUser', version: '1.0' };
-		console.log(socket);
+		socket.auth = {
+			character: 'testCharacter',
+			username: 'testUser',
+			version: '1.0'
+		};
 		if (!isConnected) socket.connect();
 	};
 
-	const value = useMemo(() => ({ socket, isConnected, connectSocket }), [socket, isConnected, connectSocket]);
+	const value = useMemo(
+		() => ({ socket, isConnected, connectSocket }),
+		[socket, isConnected, connectSocket]
+	);
 
-	return <SocketContext.Provider value={value}>{children}</SocketContext.Provider>;
+	return (
+		<SocketContext.Provider value={value}>{children}</SocketContext.Provider>
+	);
 };
 
 /** SocketHook provides the componant with access to the socket instance

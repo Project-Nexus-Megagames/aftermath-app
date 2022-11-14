@@ -9,9 +9,18 @@ interface NavProps {
 const TopNav: React.FC<NavProps> = ({ handleFilter }) => {
 	const poiMarkerValues = poiMarkerTypes.map((el) => el.value);
 	return (
-		<Flex className='navbarheader' position='fixed' top='0' left='40px' w='100%' h='40px'>
-			{/*@ts-ignore*/}
-			<CheckboxGroup onChange={(value) => handleFilter(value)} defaultValue={poiMarkerValues}>
+		<Flex
+			className='navbarheader'
+			position='fixed'
+			top='0'
+			left='40px'
+			w='100%'
+			h='40px'
+		>
+			<CheckboxGroup
+				onChange={(value) => handleFilter(value.map(String))}
+				defaultValue={poiMarkerValues}
+			>
 				<Stack direction='row' marginLeft='20px'>
 					{poiMarkerTypes.map((type, index) => (
 						<Checkbox value={type.value} key={index}>

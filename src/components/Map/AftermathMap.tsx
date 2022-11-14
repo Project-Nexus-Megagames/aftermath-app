@@ -21,7 +21,12 @@ interface MapProps {
 
 export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 	const { connectSocket } = useSocket();
-	const [activeMarker, setActiveMarker] = useState({ _id: '0', title: '', type: '', location: { lat: 0, lng: 0 } });
+	const [activeMarker, setActiveMarker] = useState({
+		_id: '0',
+		title: '',
+		type: '',
+		location: { lat: 0, lng: 0 }
+	});
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
 	const [newLocation, setNewLocation] = useState({ lat: 0, lng: 0 });
@@ -70,7 +75,7 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 		lat: 40.712776,
 		lng: -74.005974
 	};
-
+	//TODO keep map from going back to static center when values are filtered
 	return (
 		<React.Fragment>
 			<Box bg='white' h='100vh' w='100%'>
@@ -86,14 +91,25 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 						}}
 					>
 						{pois.map((poi) => (
-							//@ts-ignore
-							<Marker key={poi._id} poi={poi} onClick={() => handleActiveMarker(poi)} />
+							<Marker
+								key={poi._id}
+								poi={poi}
+								onClick={() => handleActiveMarker(poi)}
+							/>
 						))}
 					</GoogleMap>
 				</LoadScript>
 
-				<MapDrawer isOpen={markerModal} poi={activeMarker} closeDrawer={() => setMarkerModal(false)} />
-				<NewMarker isOpen={newMarkerModal} newLocation={newLocation} closeDrawer={() => setNewMarkerModal(false)} />
+				<MapDrawer
+					isOpen={markerModal}
+					poi={activeMarker}
+					closeDrawer={() => setMarkerModal(false)}
+				/>
+				<NewMarker
+					isOpen={newMarkerModal}
+					newLocation={newLocation}
+					closeDrawer={() => setNewMarkerModal(false)}
+				/>
 			</Box>
 		</React.Fragment>
 	);

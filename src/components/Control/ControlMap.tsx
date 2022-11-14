@@ -11,7 +11,7 @@ export const ControlMap = () => {
 	const poiMarkerValues = poiMarkerTypes.map((el) => el.value);
 	const pois = useSelector((state: RootState) => state.pois.list);
 	const [filter, setFilter] = useState(poiMarkerValues);
-	const [poisToDisplay, setPoisToDisplay] = useState([]);
+	const [poisToDisplay, setPoisToDisplay] = useState(pois);
 
 	useEffect(() => {
 		//TODO this will need to go to the login section / callback function
@@ -31,16 +31,13 @@ export const ControlMap = () => {
 		if (filter.length !== 0) {
 			filter.map((fil) => {
 				temp = pois.filter((el) => el.type === fil);
-				filtered.push(...temp);
+				return filtered.push(...temp);
 			});
-			//@ts-ignore
 			setPoisToDisplay(filtered);
-			//@ts-ignore
 		} else setPoisToDisplay([]);
 	}, [filter, pois]);
 
 	const handleFilter = (filterValue: string[]) => {
-		// @ts-ignore
 		setFilter(filterValue);
 	};
 

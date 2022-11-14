@@ -20,7 +20,10 @@ export const TeamMarker: React.FC<Props> = ({ poi, onClick }) => {
 		<MarkerF
 			key={poi._id}
 			position={{ lat: poi.location.lat, lng: poi.location.lng }}
-			icon={{ url: `/icons/${poi.type}.svg`, scaledSize: new google.maps.Size(24, 24) }}
+			icon={{
+				url: `/icons/${poi.type}.svg`,
+				scaledSize: new google.maps.Size(24, 24)
+			}}
 			draggable={true}
 			onDragEnd={(e) => updateLocation(poi, e.latLng!.toJSON())}
 			onClick={() => onClick()}

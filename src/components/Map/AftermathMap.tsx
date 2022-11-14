@@ -19,9 +19,11 @@ interface MapProps {
 	pois: Poi[];
 }
 
+type Center = { lat: number; lng: number };
+
 export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 	const { connectSocket } = useSocket();
-	const [activeMarker, setActiveMarker] = useState({
+	const [activeMarker, setActiveMarker] = useState<Poi>({
 		_id: '0',
 		title: '',
 		type: '',
@@ -29,7 +31,11 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 	});
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
-	const [newLocation, setNewLocation] = useState({ lat: 0, lng: 0 });
+	const [newLocation, setNewLocation] = useState<Location>({ lat: 0, lng: 0 });
+	const [center, setCenter] = useState<Center>({
+		lat: 40.712776,
+		lng: -74.005974
+	});
 
 	useEffect(() => {
 		//TODO this will need to go to the login section / callback function
@@ -71,11 +77,10 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 		maxZoom: 20,
 		mapTypeId: 'terrain'
 	};
-	const center = {
-		lat: 40.712776,
-		lng: -74.005974
-	};
-	//TODO keep map from going back to static center when values are filtered
+	//const center = {
+	//	lat: 40.712776,
+	//	lng: -74.005974
+	//};
 	return (
 		<React.Fragment>
 			<Box bg='white' h='100vh' w='100%'>

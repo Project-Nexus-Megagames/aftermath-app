@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Poi } from '../../config/types';

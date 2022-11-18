@@ -25,6 +25,7 @@ export interface Team {
 }
 
 export interface Unit {
+	_id: string;
 	location: Location;
 	description: string;
 	conditions: string[];

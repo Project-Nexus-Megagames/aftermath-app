@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'; // Import from reactjs toolkit
 import { gameServer } from '../../config/config';
 import { apiCallBegan } from '../api'; // Import Redux API call
-import { Poi } from '../../config/types';
+import { Unit } from '../../config/types';
 
 interface UnitState {
 	list: Unit[];
@@ -24,49 +24,49 @@ const slice = createSlice({
 
 	// Reducers - Events
 	reducers: {
-		poisRequested: (pois, action) => {
+		unitsRequested: (units, action) => {
 			console.log(`${action.type} Dispatched...`);
-			pois.loading = true;
+			units.loading = true;
 		},
-		poisReceived: (pois, action) => {
+		unitsReceived: (units, action) => {
 			console.log(`${action.type} Dispatched...`);
-			pois.list = action.payload;
-			pois.loading = false;
-			pois.lastFetch = Date.now();
-			pois.loaded = true;
+			units.list = action.payload;
+			units.loading = false;
+			units.lastFetch = Date.now();
+			units.loaded = true;
 		},
-		poisRequestFailed: (pois, action) => {
+		unitsRequestFailed: (units, action) => {
 			console.log(`${action.type} Dispatched`);
-			pois.failedAttempts++;
-			pois.loading = false;
+			units.failedAttempts++;
+			units.loading = false;
 		},
-		poiAdded: (pois, action) => {
+		unitAdded: (units, action) => {
 			console.log(`${action.type} Dispatched`, action.payload);
-			pois.list.push(action.payload);
-			pois.loading = false;
+			units.list.push(action.payload);
+			units.loading = false;
 		},
-		poiDeleted: (pois, action) => {
+		unitDeleted: (units, action) => {
 			console.log(`${action.type} Dispatched`);
-			const index = pois.list.findIndex((el) => el._id === action.payload._id);
-			pois.list.splice(index, 1);
+			const index = units.list.findIndex((el) => el._id === action.payload._id);
+			units.list.splice(index, 1);
 		},
-		poiUpdated: (pois, action) => {
+		unitUpdated: (units, action) => {
 			console.log(`${action.type} Dispatched`, action.payload);
-			const index = pois.list.findIndex((el) => el._id === action.payload._id);
-			pois.list[index] = action.payload;
-			pois.loading = false;
+			const index = units.list.findIndex((el) => el._id === action.payload._id);
+			units.list[index] = action.payload;
+			units.loading = false;
 		}
 	}
 });
 
 // Action Export
 export const {
-	poiAdded,
-	poiDeleted,
-	poisReceived,
-	poisRequested,
-	poisRequestFailed,
-	poiUpdated
+	unitAdded,
+	unitDeleted,
+	unitsReceived,
+	unitsRequested,
+	unitsRequestFailed,
+	unitUpdated
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
@@ -86,9 +86,9 @@ export const loadPois = (payload) => (dispatch) => {
 			url,
 			method: 'get',
 			data: payload,
-			onStart: poisRequested.type,
-			onSuccess: poisReceived.type,
-			onError: poisRequestFailed.type
+			onStart: unitsRequested.type,
+			onSuccess: unitsReceived.type,
+			onError: unitsRequestFailed.type
 		})
 	);
 };

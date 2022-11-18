@@ -2,10 +2,9 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'; // Import from r
 import { gameServer } from '../../config/config';
 import { apiCallBegan } from '../api'; // Import Redux API call
 import { Poi } from '../../config/types';
-import { RootState } from '../store';
 
-interface PoiState {
-	list: Poi[];
+interface UnitState {
+	list: Unit[];
 	loading: boolean;
 	loaded: boolean;
 	lastFetch: number | null;
@@ -14,14 +13,14 @@ interface PoiState {
 
 // Create entity slice of the store
 const slice = createSlice({
-	name: 'pois',
+	name: 'units',
 	initialState: {
 		list: [],
 		loading: false,
 		loaded: false,
 		lastFetch: null,
 		failedAttempts: 0
-	} as PoiState,
+	} as UnitState,
 
 	// Reducers - Events
 	reducers: {

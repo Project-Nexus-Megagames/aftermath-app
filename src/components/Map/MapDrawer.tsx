@@ -1,5 +1,15 @@
 import React from 'react';
-import { useDisclosure, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Text, Button } from '@chakra-ui/react';
+import {
+	useDisclosure,
+	Drawer,
+	DrawerBody,
+	DrawerHeader,
+	DrawerOverlay,
+	DrawerContent,
+	DrawerCloseButton,
+	Text,
+	Button
+} from '@chakra-ui/react';
 import { Poi } from '../../config/types';
 import { useSocket } from '../../hooks/webSocketHook';
 
@@ -9,7 +19,11 @@ interface DrawerProps {
 	poi: Poi;
 }
 
-export const MapDrawer: React.FC<DrawerProps> = ({ isOpen: open, closeDrawer, poi }) => {
+export const MapDrawer: React.FC<DrawerProps> = ({
+	isOpen: open,
+	closeDrawer,
+	poi
+}) => {
 	const { onOpen, onClose } = useDisclosure();
 	const { socket } = useSocket();
 

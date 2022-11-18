@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
-import { Button, FormControl, FormLabel, Input, Stack, HStack, Textarea, Radio, RadioGroup } from '@chakra-ui/react';
+import {
+	Button,
+	FormControl,
+	FormLabel,
+	Input,
+	Stack,
+	HStack,
+	Textarea,
+	Radio,
+	RadioGroup
+} from '@chakra-ui/react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { Poi, Location } from '../../config/types';
@@ -21,7 +31,12 @@ type FormValues = {
 	_id?: string;
 };
 
-export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, location }) => {
+export const MarkerForm: React.FC<PoiFormProps> = ({
+	onSubmit,
+	onCancel,
+	poi,
+	location
+}) => {
 	const { socket } = useSocket();
 	const defaultValues: FormValues = {
 		location: location ? location : { lat: 0, lng: 0 },
@@ -92,7 +107,14 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 							Body
 						</FormLabel>
 					</HStack>
-					<Textarea isRequired id='body' resize={'vertical'} placeholder='Body' noOfLines={40} {...register('body')} />
+					<Textarea
+						isRequired
+						id='body'
+						resize={'vertical'}
+						placeholder='Body'
+						noOfLines={40}
+						{...register('body')}
+					/>
 				</FormControl>
 
 				<Controller
@@ -112,8 +134,16 @@ export const MarkerForm: React.FC<PoiFormProps> = ({ onSubmit, onCancel, poi, lo
 				/>
 
 				<DevTool control={control} placement='bottom-right' />
-				<Button type='submit' colorScheme='green' disabled={!isValid} onClick={formSubmit(handleSubmit)}>{`Save as Draft`}</Button>
-				<Button colorScheme='red' onClick={() => handleCancel()}>{`Cancel`}</Button>
+				<Button
+					type='submit'
+					colorScheme='green'
+					disabled={!isValid}
+					onClick={formSubmit(handleSubmit)}
+				>{`Save`}</Button>
+				<Button
+					colorScheme='red'
+					onClick={() => handleCancel()}
+				>{`Cancel`}</Button>
 			</Stack>
 		</form>
 	);

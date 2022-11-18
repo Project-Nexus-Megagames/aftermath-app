@@ -47,12 +47,16 @@ const slice = createSlice({
 		},
 		characterDeleted: (characters, action) => {
 			console.log(`${action.type} Dispatched`);
-			const index = characters.list.findIndex((el) => el._id === action.payload._id);
+			const index = characters.list.findIndex(
+				(el) => el._id === action.payload._id
+			);
 			characters.list.splice(index, 1);
 		},
 		characterUpdated: (characters, action) => {
 			console.log(`${action.type} Dispatched`);
-			const index = characters.list.findIndex((el) => el._id === action.payload._id);
+			const index = characters.list.findIndex(
+				(el) => el._id === action.payload._id
+			);
 			characters.list[index] = action.payload;
 			characters.loading = false;
 		}
@@ -60,7 +64,14 @@ const slice = createSlice({
 });
 
 // Action Export
-export const { characterAdded, characterDeleted, charactersReceived, charactersRequested, charactersRequestFailed, characterUpdated } = slice.actions;
+export const {
+	characterAdded,
+	characterDeleted,
+	charactersReceived,
+	charactersRequested,
+	charactersRequestFailed,
+	characterUpdated
+} = slice.actions;
 
 export default slice.reducer; // Reducer Export
 
@@ -80,12 +91,14 @@ export const getMyCharacter = createSelector(
 
 export const getPlayerCharacters = createSelector(
 	(state: RootState) => state.characters.list,
-	(characters) => characters.filter((char) => char.tags?.some((el) => el === 'PC'))
+	(characters) =>
+		characters.filter((char) => char.tags?.some((el) => el === 'PC'))
 );
 
 export const getControl = createSelector(
 	(state: RootState) => state.characters.list,
-	(characters) => characters.filter((char) => char.tags?.some((el) => el === 'Control'))
+	(characters) =>
+		characters.filter((char) => char.tags?.some((el) => el === 'Control'))
 );
 
 export const getCharacterById = (charId: string) =>

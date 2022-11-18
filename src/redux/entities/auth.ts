@@ -71,7 +71,10 @@ const slice = createSlice({
 		setCharacter: (auth, action) => {
 			console.log(`${action.type} Dispatched`);
 			auth.character = action.payload;
-			if (action.payload.tags.some((el: string) => el.toLowerCase() === 'control')) auth.control = true;
+			if (
+				action.payload.tags.some((el: string) => el.toLowerCase() === 'control')
+			)
+				auth.control = true;
 			// initConnection(auth.user, auth.team, auth.version);
 		},
 		setControl: (auth, action) => {
@@ -102,7 +105,19 @@ const slice = createSlice({
 });
 
 // Action Export
-export const { authReceived, loginRequested, authRequestFailed, loginSocket, clearAuthError, signOut, updateUser, usersRecieved, finishLoading, setCharacter, setControl } = slice.actions;
+export const {
+	authReceived,
+	loginRequested,
+	authRequestFailed,
+	loginSocket,
+	clearAuthError,
+	signOut,
+	updateUser,
+	usersRecieved,
+	finishLoading,
+	setCharacter,
+	setControl
+} = slice.actions;
 
 export default slice.reducer; // Reducer Export
 

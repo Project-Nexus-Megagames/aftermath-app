@@ -6,6 +6,7 @@ import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import theme from './styles/Theme';
 import './styles/navbar.scss';
 import HomePage from './components/Home/HomePage';
+import TeamAdmin from './components/Control/TeamAndUnitAdmin';
 import { SocketContextProvider } from './hooks/webSocketHook';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 						<HashRouter>
 							<Routes>
 								<Route path='/home' element={<HomePage />} />
+								<Route path='/teamadmin' element={<TeamAdmin />} />
 								<Route path='*' element={<Navigate to='/home' replace />} />
 							</Routes>
 						</HashRouter>

@@ -14,7 +14,6 @@ export interface Character {
 	color: string;
 	profilePicture?: string;
 	team?: string;
-	knownContacts: Character[];
 }
 
 export type Location = {
@@ -27,7 +26,21 @@ export interface Team {
 
 export interface Unit {
 	location: Location;
+	description: string;
+	conditions: string[];
+	team: string;
 }
+
+/* const UnitSchema = new Schema({
+	model: { type: String, default: 'Unit' },
+	description: {
+		type: String,
+		default: 'Grandmas with pitchforks'
+	},
+	conditions: [{ type: String, default: 'None' }],
+	location: locationSchema,
+	team: { type: ObjectId, ref: 'Team' }
+}); */
 
 export interface User {
 	username: string | undefined;

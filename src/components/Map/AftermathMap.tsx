@@ -77,10 +77,7 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 		maxZoom: 20,
 		mapTypeId: 'terrain'
 	};
-	//const center = {
-	//	lat: 40.712776,
-	//	lng: -74.005974
-	//};
+
 	return (
 		<React.Fragment>
 			<Box bg='white' h='100vh' w='100%'>

@@ -4,9 +4,9 @@ import toast from './middleware/toast';
 import api from './middleware/api';
 
 export default function foobar() {
-  return configureStore({
-    reducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(api, toast),
-  });
+	return configureStore({
+		reducer,
+		middleware: (getDefaultMiddleware) =>
+			getDefaultMiddleware().concat(api, toast)
+	});
 }

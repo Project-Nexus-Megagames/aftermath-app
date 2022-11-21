@@ -1,8 +1,7 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'; // Import from reactjs toolkit
+import { createSlice } from '@reduxjs/toolkit'; // Import from reactjs toolkit
 import { gameServer } from '../../config/config';
 import { apiCallBegan } from '../api'; // Import Redux API call
 import { Poi } from '../../config/types';
-import { RootState } from '../store';
 
 interface PoiState {
 	list: Poi[];

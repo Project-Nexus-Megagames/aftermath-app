@@ -49,7 +49,7 @@ export const MarkerForm: React.FC<PoiFormProps> = ({
 		register,
 		control,
 		handleSubmit: formSubmit,
-		formState: { errors, isValid, dirtyFields }
+		formState: { isValid }
 	} = useForm<FormValues>({
 		mode: 'onChange',
 		reValidateMode: 'onChange',
@@ -61,6 +61,7 @@ export const MarkerForm: React.FC<PoiFormProps> = ({
 					title: poi.title,
 					body: poi.body,
 					type: poi.type
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  },
 
 		criteriaMode: 'firstError',

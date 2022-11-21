@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './styles/App.scss';
 import DatabaseProvider from './components/Common/DataBaseProvider';
 import { ChakraProvider } from '@chakra-ui/react';

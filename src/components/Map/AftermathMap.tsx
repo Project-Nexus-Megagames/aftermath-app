@@ -32,7 +32,7 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 	const [markerModal, setMarkerModal] = useState(false);
 	const [newMarkerModal, setNewMarkerModal] = useState(false);
 	const [newLocation, setNewLocation] = useState<Location>({ lat: 0, lng: 0 });
-	const [center, setCenter] = useState<Center>({
+	const [center] = useState<Center>({
 		lat: 40.712776,
 		lng: -74.005974
 	});
@@ -47,7 +47,7 @@ export const AftermathMap: React.FC<MapProps> = ({ pois }) => {
 		return function cleanup() {
 			document.removeEventListener('contextmenu', handleContextmenu);
 		};
-	}, []);
+	}, [connectSocket]);
 
 	const handleActiveMarker = (marker: Poi) => {
 		setActiveMarker(marker);

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	useDisclosure,
 	Drawer,
 	DrawerBody,
 	DrawerHeader,
@@ -24,7 +23,7 @@ export const MapDrawer: React.FC<DrawerProps> = ({
 	closeDrawer,
 	poi
 }) => {
-	const { onOpen, onClose } = useDisclosure();
+	//const { onOpen, onClose } = useDisclosure();
 	const { socket } = useSocket();
 
 	const handleDeletePoi = (id: string) => {

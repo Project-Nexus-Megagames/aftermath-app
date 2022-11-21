@@ -11,7 +11,7 @@ import React, {
 import { Socket } from 'socket.io-client';
 import { useToast } from '@chakra-ui/react';
 import { socket } from '../system/socket';
-import { useAppDispatch, useAppSelector } from './typedStoreHooks';
+import { useAppDispatch } from './typedStoreHooks';
 import { poiAdded, poiUpdated, poiDeleted } from '../redux/entities/pois';
 
 interface SocketHook {
@@ -46,7 +46,7 @@ export const SocketContextProvider: React.FC<{
 				status: 'success'
 			});
 		}
-	}, [isConnected]);
+	}, [isConnected, toast]);
 
 	useEffect(() => {
 		socket.on('connect', () => {
@@ -118,7 +118,7 @@ export const SocketContextProvider: React.FC<{
 			socket.off('createClients');
 			socket.off('deleteClients');
 		};
-	}, []);
+	}, [toast, reduxAction]);
 
 	//useEffect(() => {
 	//  if (user !== undefined) {
@@ -162,6 +162,7 @@ export const SocketContextProvider: React.FC<{
 
 	const value = useMemo(
 		() => ({ socket, isConnected, connectSocket }),
+		//eslint-disable-next-line
 		[socket, isConnected, connectSocket]
 	);
 

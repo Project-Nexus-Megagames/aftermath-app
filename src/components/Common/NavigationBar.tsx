@@ -1,14 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import {
-	SimpleGrid,
-	Button,
-	VStack,
-	Flex,
-	Spinner,
-	Box,
-	Text
-} from '@chakra-ui/react';
+import React from 'react';
+
+import { VStack, Box, Text } from '@chakra-ui/react';
 
 const NavigationBar = () => {
 	return (
